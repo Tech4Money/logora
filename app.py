@@ -29,38 +29,84 @@ def init_db():
 init_db()
 
 # ---------- STARTUP IDEA PROMPTS ----------
-startup_prompts = [
-    "Build an AI Resume Builder with ATS optimization and Stripe payments",
-    "Create an AI Storybook Creator that turns prompts into illustrated books with PDF export",
-    "Build a Doctor Appointment Scheduler with Twilio SMS + Retell AI calls",
-    "Create a Smart Shop Platform with Shopify API + AI product descriptions",
-    "Generate a Viral Waitlist SaaS with referral campaigns and email capture",
-    "Build a Sales CRM SaaS with AI-powered lead scoring and outreach automation",
-    "Create an Invoice Generator Pro with branded templates and tax compliance rules",
-    "Build a Kanban Flow SaaS with AI task suggestions & automation",
-    "Create a Project Management Lite app with AI task summaries",
-    "Build an Expense & Finance Tracker with Plaid API + AI insights",
-    "Create a Customer Segmentation Dashboard with clustering & visualization",
-    "Build a Fintech Dashboard for real-time transaction analytics",
-    "Create an Ergonomics Research Dashboard with IoT wearables API",
-    "Build a Content Tracking Dashboard for digital asset usage",
-    "Create a Legal AI contract analyzer with compliance flagging",
-    "Build an AI Cognitive Insights Dashboard for reasoning pattern analysis",
-    "Create a Mental Health Platform with journaling + AI chatbot",
-    "Build a Women's Safety App with SOS alerts + GPS tracking",
-    "Create a Pediatric Health Tracker with growth and vaccination logs",
-    "Build an AI Nutrition Coach with meal tracking and balanced diet recommendations",
-    "Create a Crypto Payment Gateway with fiat + crypto support",
-    "Build a Car Parts Marketplace with inventory sync",
-    "Create a Luxury Goods Marketplace with escrow & NFT provenance",
-    "Build an AI Spreadsheet with formula auto-generation and automations",
-    "Create an AI Animation Studio for drag-and-drop video creation with AI narration",
-    "Build a Music Visualizer Studio synced with uploaded music",
-    "Create an Interactive 3D Portfolio Builder with animated case studies",
-    "Build a Metaware Logo Particles generator for brands",
-    "Create an Event Gifting Platform with AI gift recommendations & logistics",
-    "Build a Smart Resume Interview Coach with AI feedback on answers"
-]
+startup_prompt_groups = {
+    "Startup Idea Starters": [
+        "Build an AI Resume Builder with ATS optimization and Stripe payments",
+        "Create an AI Storybook Creator that turns prompts into illustrated books with PDF export",
+        "Build a Doctor Appointment Scheduler with Twilio SMS + Retell AI calls",
+        "Create a Smart Shop Platform with Shopify API + AI product descriptions",
+        "Generate a Viral Waitlist SaaS with referral campaigns and email capture",
+        "Build a Sales CRM SaaS with AI-powered lead scoring and outreach automation",
+        "Create an Invoice Generator Pro with branded templates and tax compliance rules",
+        "Build a Kanban Flow SaaS with AI task suggestions & automation",
+        "Create a Project Management Lite app with AI task summaries",
+        "Build an Expense & Finance Tracker with Plaid API + AI insights",
+        "Create a Customer Segmentation Dashboard with clustering & visualization",
+        "Build a Fintech Dashboard for real-time transaction analytics",
+        "Create an Ergonomics Research Dashboard with IoT wearables API",
+        "Build a Content Tracking Dashboard for digital asset usage",
+        "Create a Legal AI contract analyzer with compliance flagging",
+        "Build an AI Cognitive Insights Dashboard for reasoning pattern analysis",
+        "Create a Mental Health Platform with journaling + AI chatbot",
+        "Build a Women's Safety App with SOS alerts + GPS tracking",
+        "Create a Pediatric Health Tracker with growth and vaccination logs",
+        "Build an AI Nutrition Coach with meal tracking and balanced diet recommendations",
+        "Create a Crypto Payment Gateway with fiat + crypto support",
+        "Build a Car Parts Marketplace with inventory sync",
+        "Create a Luxury Goods Marketplace with escrow & NFT provenance",
+        "Build an AI Spreadsheet with formula auto-generation and automations",
+        "Create an AI Animation Studio for drag-and-drop video creation with AI narration",
+        "Build a Music Visualizer Studio synced with uploaded music",
+        "Create an Interactive 3D Portfolio Builder with animated case studies",
+        "Build a Metaware Logo Particles generator for brands",
+        "Create an Event Gifting Platform with AI gift recommendations & logistics",
+        "Build a Smart Resume Interview Coach with AI feedback on answers"
+    ],
+    "AI & SaaS Projects": [
+        "AI Agency Landing Page — Template for marketing AI services (Next.js + Tailwind)",
+        "AI Web Assistant — SaaS landing for an AI-powered chatbot (Next.js + OpenAI SDK)",
+        "AI Chatbot Website — Conversational bot frontend using GPT + Supabase",
+        "AI Voice Assistant UI — Voice-enabled chat interface with speech-to-text + ElevenLabs",
+        "AI Elements SDK Demo — Component kit for building AI-powered UI (React + AI SDK)",
+        "AI Landing Page — General AI business site template (Next.js)",
+        "Sentient AI — Experimental AI personality showcase (OpenAI + React)",
+        "CoolKid AI — Fun AI playground for kids with GPT + voice",
+        "AI Discovery Form — Smart client intake form with AI qualification logic (Next.js + GPT)",
+        "AI Resume Builder — ATS-friendly CVs generated by GPT (Next.js + Supabase)",
+        "AI Spreadsheet — Spreadsheet with AI-assisted formulas (React + GPT)",
+        "AI Service Landing Page — Site template for AI SaaS companies (Next.js + Tailwind)",
+        "AI Prompt Builder — Interface to create and organize GPT prompts (React + OpenAI API)",
+        "AI Card Generator — AI-generated digital business cards (Next.js + Vercel AI SDK)",
+        "AI Kit Landing — SaaS starter kit template for AI agencies (Next.js + ShadCN)",
+        "AI Alan Watts Blog — Auto-generated philosophy-style blog posts (OpenAI + Next.js)",
+        "AI Prompt Project Builder — Workflow app to design GPT projects (React + Supabase)",
+        "AI Dashboard — Analytics + insights SaaS template (Next.js + Supabase)",
+        "AI Columns Design — AI-driven dynamic content layouts (Next.js + Tailwind)",
+        "AI Nutrition Coach — Personalized diet recommendations with GPT + Spoonacular API",
+        "AI Dentist Receptionist — Automated dental booking via phone (Twilio + Retell AI)",
+        "Legal AI — Contract/compliance analyzer using GPT + Pinecone",
+        "AI Trading Platform — Algo-trading dashboard with GPT insights (Web3 API + React)",
+        "AI Storybook Creator — Generates illustrated kids' stories (GPT + DALL·E + ElevenLabs)",
+        "AI Cognitive Fallacy Index — Explains biases/fallacies with GPT",
+        "AI Robotics Landing Page — Showcase site for AI + robotics startups (Next.js)",
+        "AI SaaS Landing Hero with Video — Marketing site with AI demo background (Next.js + video.js)",
+        "AI Music Converter — Converts audio styles with ML (TensorFlow + WebAudio API)",
+        "AI Job Matching Platform — Matches resumes to job postings with GPT embeddings",
+        "CodeHope – AI Coding Assistant — Copilot-like tool for devs (GPT + VSCode API)",
+        "AI SDK Starter — Boilerplate for building apps with AI SDK (Next.js + Vercel AI SDK)",
+        "AI Powered Animation Studio — Animations generated via GPT prompts (Three.js + OpenAI)",
+        "AI Chat UI Design — Demo for integrating chatbots into apps (React + Tailwind)",
+        "AI Blog Generator — Auto-blog writer with GPT + Supabase",
+        "AI SaaS Starter — Starter kit for AI SaaS apps (Next.js + ShadCN)",
+        "AI Resume ATS Checker — Checks resume scoring against ATS (OpenAI + Puppeteer)",
+        "AI Platform Hero Section — Landing page hero with AI branding (Next.js)",
+        "AI Story Voiceover — Narration with ElevenLabs + GPT",
+        "AI Music Starter (ElevenLabs) — Generates music ideas from text prompts (GPT + Audio SDK)",
+        "AI Podcast Generator — Turns text into podcast episodes (GPT + ElevenLabs)",
+        "AI Music Starter v3 — Updated audio-generation starter using OpenAI TTS + Next.js",
+        "AI Video Animation Page — Hero section with AI-generated video background"
+    ]
+}
 
 def save_user(email, role):
     conn = sqlite3.connect(DB_FILE)
@@ -115,15 +161,15 @@ def index():
     if request.method == 'POST':
         user_request = request.form.get('user_request', '').strip()
         if not user_request:
-            return render_template("index.html", error="Please enter a request", template_prompts=template_prompts, startup_prompts=startup_prompts)
+            return render_template("index.html", error="Please enter a request", template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
 
         subtasks = hrm_plan(user_request)
         results = [{"subtask": st, "code": generate_code(st, user_request)} for st in subtasks]
         request.session_results = results
         request.session_request = user_request
-        return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts, startup_prompts=startup_prompts)
+        return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
 
-    return render_template("index.html", template_prompts=template_prompts, startup_prompts=startup_prompts)
+    return render_template("index.html", template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
 
 @app.route('/download', methods=['POST'])
 def download():
