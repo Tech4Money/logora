@@ -1,316 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logora - AI Reasoning-First Coding Agent</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <title>Logora – AI Reasoning-First Coding Agent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #f5f7ff;
+      --bg-secondary: #ffffff;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-on-primary: #ffffff;
+      --border-color: #ddd;
+      --card-hover: #f0e9ff;
+      --code-bg: #272822;
+      --code-text: #f8f8f2;
+      --btn-primary: #6a11cb;
+      --btn-primary-hover: #5010a5;
+      --btn-secondary: #2575fc;
+      --btn-text: #ffffff;
+      --accent-color: #6a11cb;
+      --header-gradient-start: #6a11cb;
+      --header-gradient-end: #2575fc;
+      --toggle-bg: rgba(255, 255, 255, 0.2);
+      --toggle-bg-hover: rgba(255, 255, 255, 0.3);
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+    [data-theme="dark"] {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --text-primary: #eee;
+      --text-secondary: #aaa;
+      --text-on-primary: #ffffff;
+      --border-color: #444;
+      --card-hover: #2a2a4e;
+      --code-bg: #0f0f23;
+      --code-text: #f8f8f2;
+      --btn-primary: #7c3aed;
+      --btn-primary-hover: #6d28d9;
+      --btn-secondary: #3b82f6;
+      --btn-text: #ffffff;
+      --accent-color: #8b5cf6;
+      --header-gradient-start: #7c3aed;
+      --header-gradient-end: #3b82f6;
+      --toggle-bg: rgba(255, 255, 255, 0.15);
+      --toggle-bg-hover: rgba(255, 255, 255, 0.25);
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            padding: 20px 0;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .input-section {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-            font-size: 1.1em;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
-            transition: border-color 0.3s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .loading-container {
-            display: none;
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-top: 30px;
-        }
-
-        .loading-container.show {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: #667eea;
-            font-size: 1.2em;
-            font-weight: 600;
-        }
-
-        .loading-subtext {
-            color: #666;
-            margin-top: 10px;
-        }
-
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #c33;
-        }
-
-        .results-section {
-            margin-top: 30px;
-        }
-
-        .request-display {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .request-display h2 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .request-display p {
-            color: #555;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        .subtask-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .subtask-card h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .code-container {
-            background: #1e1e1e;
-            border-radius: 8px;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .code-header {
-            background: #2d2d2d;
-            padding: 10px 15px;
-            border-bottom: 1px solid #404040;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .code-header::before {
-            content: '';
-            width: 12px;
-            height: 12px;
-            background: #ff5f56;
-            border-radius: 50%;
-            box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
-        }
-
-        pre {
-            margin: 0;
-            padding: 20px;
-            overflow-x: auto;
-        }
-
-        code {
-            color: #d4d4d4;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .loading {
-            text-align: center;
-            color: white;
-            font-size: 1.2em;
-            padding: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .input-section, .subtask-card {
-                padding: 20px;
-            }
-        }
-    </style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    header {
+      background: linear-gradient(90deg, var(--header-gradient-start), var(--header-gradient-end));
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-on-primary);
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--toggle-bg);
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      color: var(--text-on-primary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover {
+      background: var(--toggle-bg-hover);
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 1rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+    button {
+      background: var(--btn-primary);
+      border: none;
+      color: var(--btn-text);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: var(--btn-primary-hover);
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 1.4rem;
+      color: var(--text-primary);
+    }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .prompt-card {
+      background: var(--bg-secondary);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .prompt-card:hover {
+      background: var(--card-hover);
+      border-color: var(--accent-color);
+    }
+    .task {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      margin: 15px 0;
+      padding: 15px;
+    }
+    .task h3 {
+      font-size: 1.1rem;
+      margin: 0 0 10px;
+      cursor: pointer;
+      color: var(--accent-color);
+    }
+    .task pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+      display: none; /* collapsed by default */
+    }
+    .copy-btn {
+      margin-top: 10px;
+      background: var(--btn-secondary);
+    }
+    form.download-form {
+      margin-top: 30px;
+      background: var(--bg-secondary);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 5px var(--shadow-color);
+    }
+    input[type="email"], select {
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🧠 Logora</h1>
-            <p>AI Reasoning-First Coding Agent</p>
-        </div>
+  <header>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+    <h1>Logora</h1>
+    <p>AI Reasoning-First Coding Agent</p>
+  </header>
+  <div class="container">
+    <form method="post">
+      <textarea name="user_request" placeholder="What would you like to build?"></textarea><br>
+      <button type="submit">Generate Code</button>
+    </form>
 
-        <div class="input-section">
-            <form method="POST" action="/generate">
-                <div class="form-group">
-                    <label for="user_request">What would you like to build?</label>
-                    <textarea 
-                        id="user_request" 
-                        name="user_request" 
-                        placeholder="Example: Create a Python function to calculate fibonacci numbers recursively"
-                        required>{{ user_request if user_request else '' }}</textarea>
-                </div>
-                
-                {% if error %}
-                <div class="error">{{ error }}</div>
-                {% endif %}
-                
-                <button type="submit" class="btn" id="generateBtn">Generate Code</button>
-            </form>
+    <h2>Or try a starter prompt:</h2>
+    <div class="prompt-grid">
+      {% for p in template_prompts %}
+      <form method="post">
+        <input type="hidden" name="user_request" value="{{ p }}">
+        <div class="prompt-card" onclick="this.closest('form').submit();">
+          {{ p }}
         </div>
-
-        <div class="loading-container" id="loadingContainer">
-            <div class="spinner"></div>
-            <div class="loading-text">Generating your code...</div>
-            <div class="loading-subtext">This may take 30-60 seconds as the AI breaks down your request and generates code for each step.</div>
-        </div>
-
-        {% if results %}
-        <div class="results-section">
-            <div class="request-display">
-                <h2>Your Request</h2>
-                <p>{{ user_request }}</p>
-            </div>
-
-            {% for result in results %}
-            <div class="subtask-card">
-                <h3>{{ loop.index }}. {{ result.subtask }}</h3>
-                <div class="code-container">
-                    <div class="code-header"></div>
-                    <pre><code>{{ result.code }}</code></pre>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
+      </form>
+      {% endfor %}
     </div>
 
-    <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const userRequest = document.getElementById('user_request').value.trim();
-            if (userRequest) {
-                document.getElementById('generateBtn').disabled = true;
-                document.getElementById('loadingContainer').classList.add('show');
-                document.querySelector('.input-section').style.display = 'none';
-            }
-        });
-    </script>
+    {% if results %}
+      <h2>Your Request</h2>
+      <p>{{ user_request }}</p>
+
+      {% for r in results %}
+        <div class="task">
+          <h3 onclick="toggleCode(this)">{{ r.subtask }}</h3>
+          <pre>{{ r.code }}</pre>
+          <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+        </div>
+      {% endfor %}
+
+      <h2>Download Your Project</h2>
+      <form method="post" action="/download" class="download-form">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <select name="role">
+          <option value="Developer">Developer</option>
+          <option value="Founder">Founder</option>
+          <option value="Student">Student</option>
+          <option value="Other">Other</option>
+        </select>
+        <button type="submit">Download as ZIP</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const toggleBtn = document.getElementById('themeToggle');
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme on page load
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const toggleBtn = document.getElementById('themeToggle');
+      
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (toggleBtn) {
+        toggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      }
+    })();
+
+    function toggleCode(el) {
+      const pre = el.nextElementSibling;
+      pre.style.display = pre.style.display === "block" ? "none" : "block";
+    }
+    function copyCode(btn) {
+      const pre = btn.previousElementSibling;
+      navigator.clipboard.writeText(pre.innerText);
+      btn.innerText = "Copied!";
+      setTimeout(() => btn.innerText = "Copy Code", 2000);
+    }
+  </script>
 </body>
 </html>
