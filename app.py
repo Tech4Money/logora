@@ -28,6 +28,40 @@ def init_db():
 
 init_db()
 
+# ---------- STARTUP IDEA PROMPTS ----------
+startup_prompts = [
+    "Build an AI Resume Builder with ATS optimization and Stripe payments",
+    "Create an AI Storybook Creator that turns prompts into illustrated books with PDF export",
+    "Build a Doctor Appointment Scheduler with Twilio SMS + Retell AI calls",
+    "Create a Smart Shop Platform with Shopify API + AI product descriptions",
+    "Generate a Viral Waitlist SaaS with referral campaigns and email capture",
+    "Build a Sales CRM SaaS with AI-powered lead scoring and outreach automation",
+    "Create an Invoice Generator Pro with branded templates and tax compliance rules",
+    "Build a Kanban Flow SaaS with AI task suggestions & automation",
+    "Create a Project Management Lite app with AI task summaries",
+    "Build an Expense & Finance Tracker with Plaid API + AI insights",
+    "Create a Customer Segmentation Dashboard with clustering & visualization",
+    "Build a Fintech Dashboard for real-time transaction analytics",
+    "Create an Ergonomics Research Dashboard with IoT wearables API",
+    "Build a Content Tracking Dashboard for digital asset usage",
+    "Create a Legal AI contract analyzer with compliance flagging",
+    "Build an AI Cognitive Insights Dashboard for reasoning pattern analysis",
+    "Create a Mental Health Platform with journaling + AI chatbot",
+    "Build a Women's Safety App with SOS alerts + GPS tracking",
+    "Create a Pediatric Health Tracker with growth and vaccination logs",
+    "Build an AI Nutrition Coach with meal tracking and balanced diet recommendations",
+    "Create a Crypto Payment Gateway with fiat + crypto support",
+    "Build a Car Parts Marketplace with inventory sync",
+    "Create a Luxury Goods Marketplace with escrow & NFT provenance",
+    "Build an AI Spreadsheet with formula auto-generation and automations",
+    "Create an AI Animation Studio for drag-and-drop video creation with AI narration",
+    "Build a Music Visualizer Studio synced with uploaded music",
+    "Create an Interactive 3D Portfolio Builder with animated case studies",
+    "Build a Metaware Logo Particles generator for brands",
+    "Create an Event Gifting Platform with AI gift recommendations & logistics",
+    "Build a Smart Resume Interview Coach with AI feedback on answers"
+]
+
 def save_user(email, role):
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
@@ -81,15 +115,15 @@ def index():
     if request.method == 'POST':
         user_request = request.form.get('user_request', '').strip()
         if not user_request:
-            return render_template("index.html", error="Please enter a request", template_prompts=template_prompts)
+            return render_template("index.html", error="Please enter a request", template_prompts=template_prompts, startup_prompts=startup_prompts)
 
         subtasks = hrm_plan(user_request)
         results = [{"subtask": st, "code": generate_code(st, user_request)} for st in subtasks]
         request.session_results = results
         request.session_request = user_request
-        return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts)
+        return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts, startup_prompts=startup_prompts)
 
-    return render_template("index.html", template_prompts=template_prompts)
+    return render_template("index.html", template_prompts=template_prompts, startup_prompts=startup_prompts)
 
 @app.route('/download', methods=['POST'])
 def download():

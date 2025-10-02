@@ -1,0 +1,65 @@
+Update my Flask app **Logora** to include a library of 30 public "Startup Idea Starter Prompts".  
+
+### Requirements
+1. In `app.py`  
+   - Add a Python list named `startup_prompts` with 30 entries (provided below).  
+   - Make sure they can be accessed by the UI.
+
+2. In `templates/index.html`  
+   - Add a new section **Startup Idea Starters** above the text input form.  
+   - Render the `startup_prompts` list as clickable cards.  
+   - When clicked, they should fill the textarea (`user_request`) with that prompt.  
+
+3. Styling:  
+   - Each card should have a modern glassmorphism style (rounded corners, hover glow, gradient border).  
+   - Responsive grid (2 columns on desktop, 1 on mobile).  
+   - Match existing dark mode / light mode variables.  
+
+### Startup Prompts List
+- Build an AI Resume Builder with ATS optimization and Stripe payments  
+- Create an AI Storybook Creator that turns prompts into illustrated books with PDF export  
+- Build a Doctor Appointment Scheduler with Twilio SMS + Retell AI calls  
+- Create a Smart Shop Platform with Shopify API + AI product descriptions  
+- Generate a Viral Waitlist SaaS with referral campaigns and email capture  
+- Build a Sales CRM SaaS with AI-powered lead scoring and outreach automation  
+- Create an Invoice Generator Pro with branded templates and tax compliance rules  
+- Build a Kanban Flow SaaS with AI task suggestions & automation  
+- Create a Project Management Lite app with AI task summaries  
+- Build an Expense & Finance Tracker with Plaid API + AI insights  
+- Create a Customer Segmentation Dashboard with clustering & visualization  
+- Build a Fintech Dashboard for real-time transaction analytics  
+- Create an Ergonomics Research Dashboard with IoT wearables API  
+- Build a Content Tracking Dashboard for digital asset usage  
+- Create a Legal AI contract analyzer with compliance flagging  
+- Build an AI Cognitive Insights Dashboard for reasoning pattern analysis  
+- Create a Mental Health Platform with journaling + AI chatbot  
+- Build a Women’s Safety App with SOS alerts + GPS tracking  
+- Create a Pediatric Health Tracker with growth and vaccination logs  
+- Build an AI Nutrition Coach with meal tracking and balanced diet recommendations  
+- Create a Crypto Payment Gateway with fiat + crypto support  
+- Build a Car Parts Marketplace with inventory sync  
+- Create a Luxury Goods Marketplace with escrow & NFT provenance  
+- Build an AI Spreadsheet with formula auto-generation and automations  
+- Create an AI Animation Studio for drag-and-drop video creation with AI narration  
+- Build a Music Visualizer Studio synced with uploaded music  
+- Create an Interactive 3D Portfolio Builder with animated case studies  
+- Build a Metaware Logo Particles generator for brands  
+- Create an Event Gifting Platform with AI gift recommendations & logistics  
+- Build a Smart Resume Interview Coach with AI feedback on answers  
+
+---
+
+## 🔹 Option 2 — Manual File Edit  
+If you’d rather **edit files yourself**:  
+
+1. In `app.py` add:  
+
+```python
+startup_prompts = [
+    "Build an AI Resume Builder with ATS optimization and Stripe payments",
+    "Create an AI Storybook Creator that turns prompts into illustrated books with PDF export",
+    "Build a Doctor Appointment Scheduler with Twilio SMS + Retell AI calls",
+    "Create a Smart Shop Platform with Shopify API + AI product descriptions",
+    "Generate a Viral Waitlist SaaS with referral campaigns and email capture",
+    # ... (continue until all 30 are listed)
+]
