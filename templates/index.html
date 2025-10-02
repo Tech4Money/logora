@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logora - AI Reasoning-First Coding Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c33;
+        }
+
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .request-display {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .request-display h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .request-display p {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .subtask-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .subtask-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .code-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 10px 15px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-header::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #ff5f56;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            color: #d4d4d4;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .input-section, .subtask-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Logora</h1>
+            <p>AI Reasoning-First Coding Agent</p>
+        </div>
+
+        <div class="input-section">
+            <form method="POST" action="/generate">
+                <div class="form-group">
+                    <label for="user_request">What would you like to build?</label>
+                    <textarea 
+                        id="user_request" 
+                        name="user_request" 
+                        placeholder="Example: Create a Python function to calculate fibonacci numbers recursively"
+                        required>{{ user_request if user_request else '' }}</textarea>
+                </div>
+                
+                {% if error %}
+                <div class="error">{{ error }}</div>
+                {% endif %}
+                
+                <button type="submit" class="btn">Generate Code</button>
+            </form>
+        </div>
+
+        {% if results %}
+        <div class="results-section">
+            <div class="request-display">
+                <h2>Your Request</h2>
+                <p>{{ user_request }}</p>
+            </div>
+
+            {% for result in results %}
+            <div class="subtask-card">
+                <h3>{{ loop.index }}. {{ result.subtask }}</h3>
+                <div class="code-container">
+                    <div class="code-header"></div>
+                    <pre><code>{{ result.code }}</code></pre>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
