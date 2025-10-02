@@ -265,6 +265,67 @@
       border-color: var(--blue-400);
       box-shadow: 0 0 15px rgba(59,130,246,0.3);
     }
+    
+    .startup-prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 25px;
+      margin-bottom: 40px;
+    }
+    
+    @media (max-width: 768px) {
+      .startup-prompts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .startup-prompt-card {
+      background: var(--background-card);
+      backdrop-filter: blur(12px);
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid var(--gray-500);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(59,130,246,0.15);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .startup-prompt-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 12px;
+      padding: 1px;
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .startup-prompt-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px rgba(59,130,246,0.4);
+      border-color: var(--blue-400);
+    }
+    
+    .startup-prompt-card:hover::before {
+      opacity: 1;
+    }
+    
+    .startup-prompt-card:active {
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -274,8 +335,17 @@
     <p>AI Reasoning-First Coding Agent</p>
   </header>
   <div class="container">
-    <form method="post">
-      <textarea name="user_request" placeholder="What would you like to build?"></textarea><br>
+    <h2>🚀 Startup Idea Starters</h2>
+    <div class="startup-prompts-grid">
+      {% for prompt in startup_prompts %}
+      <div class="startup-prompt-card" onclick="fillTextarea('{{ prompt }}')">
+        {{ prompt }}
+      </div>
+      {% endfor %}
+    </div>
+
+    <form method="post" id="mainForm">
+      <textarea name="user_request" id="userTextarea" placeholder="What would you like to build?"></textarea><br>
       <button type="submit">Generate Code</button>
     </form>
 
@@ -318,6 +388,14 @@
   </div>
 
   <script>
+    // Fill textarea with selected startup prompt
+    function fillTextarea(prompt) {
+      const textarea = document.getElementById('userTextarea');
+      textarea.value = prompt;
+      textarea.focus();
+      textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     // Theme toggle functionality
     function toggleTheme() {
       const currentTheme = document.documentElement.getAttribute('data-theme');
