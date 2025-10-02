@@ -1,0 +1,16 @@
+/* Logora - AI Reasoning-First Coding Agent */
+/* Additional styles - main styles are in templates/index.html */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

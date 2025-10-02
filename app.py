@@ -293,8 +293,12 @@ def save_user(email, role):
 def get_openai_client():
     api_key = os.environ.get('OPENAI_API_KEY')
     if not api_key:
-        raise ValueError("OPENAI_API_KEY environment variable not set")
+        return None
     return OpenAI(api_key=api_key)
+
+def check_api_key():
+    """Check if OpenAI API key is configured"""
+    return os.environ.get('OPENAI_API_KEY') is not None
 
 # ---------- PLANNING + CODE GENERATION ----------
 def hrm_plan(user_request):
@@ -337,11 +341,20 @@ def index():
         if not user_request:
             return render_template("index.html", error="Please enter a request", template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
 
-        subtasks = hrm_plan(user_request)
-        results = [{"subtask": st, "code": generate_code(st, user_request)} for st in subtasks]
-        request.session_results = results
-        request.session_request = user_request
-        return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
+        # Check if API key is configured
+        if not check_api_key():
+            error_msg = "⚠️ OpenAI API key is missing. Please add your OPENAI_API_KEY to the .env file to use Logora."
+            return render_template("index.html", error=error_msg, user_request=user_request, template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
+
+        try:
+            subtasks = hrm_plan(user_request)
+            results = [{"subtask": st, "code": generate_code(st, user_request)} for st in subtasks]
+            request.session_results = results
+            request.session_request = user_request
+            return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
+        except Exception as e:
+            error_msg = f"Error generating code: {str(e)}"
+            return render_template("index.html", error=error_msg, user_request=user_request, template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
 
     return render_template("index.html", template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
 
