@@ -1,0 +1,185 @@
+✅ Logora is Complete!
+Your AI reasoning-first coding agent is now live and running! Here are all the file contents:
+
+app.py
+import os
+from flask import Flask, render_template, request, jsonify
+from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SESSION_SECRET', 'dev-secret-key')
+def get_openai_client():
+    """Initialize OpenAI client with error handling."""
+    api_key = os.environ.get('OPENAI_API_KEY')
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY environment variable not set")
+    return OpenAI(api_key=api_key)
+def hrm_plan(user_request):
+    """
+    Uses AI to break down a user request into 4-5 logical subtasks for code generation.
+    This provides intelligent, context-aware task decomposition.
+    """
+    try:
+        client = get_openai_client()
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert software architect. Break down coding requests into 4-5 logical, specific subtasks. Each subtask should be a clear, actionable step. Return only the subtasks as a numbered list, nothing else."
+                },
+                {
+                    "role": "user",
+                    "content": f"Break down this coding request into 4-5 specific subtasks:\n\n{user_request}"
+                }
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        
+        subtasks_text = response.choices[0].message.content or ""
+        subtasks_text = subtasks_text.strip()
+        subtasks = []
+        
+        for line in subtasks_text.split('\n'):
+            line = line.strip()
+            if line and (line[0].isdigit() or line.startswith('-') or line.startswith('•')):
+                subtask = line.lstrip('0123456789.-•) ').strip()
+                if subtask:
+                    subtasks.append(subtask)
+        
+        if len(subtasks) < 3:
+            subtasks = [
+                f"Set up the basic project structure and dependencies for: {user_request}",
+                f"Implement the core functionality and main logic for: {user_request}",
+                f"Add error handling and input validation for: {user_request}",
+                f"Create helper functions and utilities for: {user_request}"
+            ]
+        
+        return subtasks[:5]
+        
+    except Exception as e:
+        print(f"Error in hrm_plan: {str(e)}")
+        return [
+            f"Set up the basic project structure for: {user_request}",
+            f"Implement the core functionality for: {user_request}",
+            f"Add error handling for: {user_request}",
+            f"Add documentation for: {user_request}"
+        ]
+def generate_code(subtask, user_request):
+    """
+    Uses OpenAI API to generate code for a specific subtask with comprehensive error handling.
+    """
+    try:
+        client = get_openai_client()
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert software engineer. Generate clean, well-commented code based on the user's request. Only output the code, no explanations unless asked. Include proper error handling and follow best practices."
+                },
+                {
+                    "role": "user",
+                    "content": f"Original request: {user_request}\n\nSubtask: {subtask}\n\nGenerate the code for this subtask."
+                }
+            ],
+            temperature=0.7,
+            max_tokens=1000
+        )
+        
+        code = response.choices[0].message.content
+        return code
+    except ValueError as e:
+        print(f"Configuration error: {str(e)}")
+        return f"# Configuration Error: {str(e)}\n# Please ensure OPENAI_API_KEY is set in your environment variables."
+    except Exception as e:
+        print(f"Error generating code: {str(e)}")
+        return f"# Error generating code: {str(e)}\n# Please check your API key and internet connection."
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+@app.route('/generate', methods=['POST'])
+def generate():
+    user_request = request.form.get('user_request', '').strip()
+    
+    if not user_request:
+        return render_template('index.html', error="Please enter a request")
+    
+    # Generate subtasks
+    subtasks = hrm_plan(user_request)
+    
+    # Generate code for each subtask
+    results = []
+    for subtask in subtasks:
+        code = generate_code(subtask, user_request)
+        results.append({
+            'subtask': subtask,
+            'code': code
+        })
+    
+    return render_template('index.html', 
+                         user_request=user_request, 
+                         results=results)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
+requirements.txt
+flask
+openai
+python-dotenv
+.env.example
+OPENAI_API_KEY=your-key-here
+README.md
+# Logora - AI Reasoning-First Coding Agent
+An intelligent Flask web application that breaks down coding requests into logical subtasks and generates code for each using OpenAI's GPT-4.
+## Setup Instructions
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
+2. Configure OpenAI API Key
+Create a .env file in the project root and add your OpenAI API key:
+
+OPENAI_API_KEY=your-actual-openai-api-key-here
+You can copy the .env.example file as a template:
+
+cp .env.example .env
+Then edit the .env file with your actual API key.
+
+3. Run the Application
+python app.py
+4. Access the Application
+Open your web browser and navigate to:
+
+http://localhost:5000
+How It Works
+Enter Your Request: Type your coding request in the textarea (e.g., "Create a Python function to sort a list")
+AI Planning: The app breaks down your request into 4-5 logical subtasks
+Code Generation: For each subtask, the app uses OpenAI GPT-4 to generate relevant code
+View Results: See all subtasks with their generated code displayed in clean, formatted blocks
+Features
+🧠 Intelligent task decomposition
+💻 AI-powered code generation using GPT-4
+🎨 Modern, responsive UI with clean styling
+🌙 Dark-themed code display for better readability
+⚡ Fast and simple to use
+Requirements
+Python 3.7+
+OpenAI API key
+Internet connection
+Technologies Used
+Flask - Web framework
+OpenAI API - Code generation (GPT-4o-mini)
+python-dotenv - Environment variable management
+### **templates/index.html** 
+The HTML file contains a beautiful gradient UI (purple/violet theme) with a textarea input form and displays subtasks with dark-themed code blocks when results are generated.
+---
+## 🎉 Your App is Running!
+The application is now live and accessible in your webview. Here's what you can do:
+1. **Try it out**: Enter any coding request like "Create a Python function to calculate fibonacci numbers"
+2. **See the magic**: The AI will break down your request into 4-5 smart subtasks and generate code for each
+3. **View results**: Each subtask appears in a clean card with its generated code in a dark-themed code block
+The app uses OpenAI's GPT-4o-mini model for both intelligent task decomposition and code generation, providing a true reasoning-first approach to coding assistance!
+Checkpoint made
+just now
+Add detailed overview and architecture for AI coding agent
