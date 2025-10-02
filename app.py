@@ -4,7 +4,7 @@ import csv
 import zipfile
 import sqlite3
 from datetime import datetime
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, session
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -349,8 +349,9 @@ def index():
         try:
             subtasks = hrm_plan(user_request)
             results = [{"subtask": st, "code": generate_code(st, user_request)} for st in subtasks]
-            request.session_results = results
-            request.session_request = user_request
+            # Store in Flask session for download
+            session['results'] = results
+            session['user_request'] = user_request
             return render_template("index.html", user_request=user_request, results=results, template_prompts=template_prompts, startup_prompt_groups=startup_prompt_groups)
         except Exception as e:
             error_msg = f"Error generating code: {str(e)}"
@@ -370,8 +371,11 @@ def download():
     save_user(email, role)
 
     # Get session results
-    user_request = getattr(request, "session_request", "AI Project")
-    results = getattr(request, "session_results", [])
+    user_request = session.get("user_request", "AI Project")
+    results = session.get("results", [])
+
+    if not results:
+        return "No generated code to download. Please generate code first.", 400
 
     # Create ZIP in memory
     zip_buffer = io.BytesIO()
