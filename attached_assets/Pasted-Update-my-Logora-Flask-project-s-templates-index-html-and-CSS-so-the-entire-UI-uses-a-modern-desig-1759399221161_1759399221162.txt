@@ -1,0 +1,73 @@
+Update my Logora Flask project’s `templates/index.html` and CSS so the entire UI uses a modern design system with CSS variables.  
+
+**Key Requirements:**
+
+1. **CSS Variables Setup**  
+   - Add variables in `:root` for colors:  
+     - --blue-400: #60A5FA  
+     - --blue-500: #3B82F6  
+     - --blue-600: #2563EB  
+     - --gray-300: #D1D5DB  
+     - --gray-400: #9CA3AF  
+     - --gray-500: #6B7280  
+     - --background-dark: #0A0A0A  
+     - --background-card: rgba(255,255,255,0.05)  
+     - --foreground-dark: #FFFFFF  
+     - --foreground-light: #000000  
+
+2. **Apply Grid Background**  
+   - Add a faint grid background to the `<body>` using:  
+     ```css
+     background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                       linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+     background-size: 30px 30px;
+     ```
+
+3. **Hero Section**  
+   - Make the main Logora `<h1>` use a **silver-to-blue gradient text**:  
+     ```css
+     background: linear-gradient(to right, #9CA3AF, #D1D5DB, #3B82F6);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     filter: drop-shadow(0 0 8px rgba(59,130,246,0.6));
+     ```
+
+4. **Cards & Buttons**  
+   - Style cards (prompt cards, task cards, forms) with **glass morphism**:  
+     - `background: var(--background-card)`  
+     - `backdrop-filter: blur(12px)`  
+     - `border-radius: 12px`  
+     - `border: 1px solid var(--gray-500)`  
+     - `box-shadow: 0 0 20px rgba(59,130,246,0.2)`  
+
+   - Add **hover glow animations**:  
+     ```css
+     :hover {
+       transform: translateY(-2px) scale(1.02);
+       box-shadow: 0 0 20px rgba(59,130,246,0.5);
+       border-color: var(--blue-400);
+     }
+     ```
+
+5. **Dark Mode Toggle Integration**  
+   - Update styles to pull from CSS variables so switching themes is easier.  
+   - In dark mode, use `--foreground-dark`, `--background-dark`, and `--background-card`.  
+   - In light mode, use `--foreground-light` and white backgrounds.  
+
+6. **Animations**  
+   - Add a reusable `.floating` animation:  
+     ```css
+     @keyframes float {
+       0%, 100% { transform: translateY(0); }
+       50% { transform: translateY(-10px); }
+     }
+     .floating {
+       animation: float 6s ease-in-out infinite;
+     }
+     ```
+
+7. **Final Polish**  
+   - Make sure the “Generate Code” button and “Download Project” CTA button use the gradient + glow effect.  
+   - Starter prompts should look like interactive SaaS cards (with scale + glow hover).  
+   - Ensure light/dark mode toggle flips correctly by swapping variable values, not hardcoded colors.
+
