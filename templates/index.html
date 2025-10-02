@@ -335,14 +335,16 @@
     <p>AI Reasoning-First Coding Agent</p>
   </header>
   <div class="container">
-    <h2>🚀 Startup Idea Starters</h2>
+    {% for category, prompts in startup_prompt_groups.items() %}
+    <h2>🚀 {{ category }}</h2>
     <div class="startup-prompts-grid">
-      {% for prompt in startup_prompts %}
+      {% for prompt in prompts %}
       <div class="startup-prompt-card" onclick="fillTextarea('{{ prompt }}')">
         {{ prompt }}
       </div>
       {% endfor %}
     </div>
+    {% endfor %}
 
     <form method="post" id="mainForm">
       <textarea name="user_request" id="userTextarea" placeholder="What would you like to build?"></textarea><br>
