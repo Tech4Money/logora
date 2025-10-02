@@ -1,0 +1,154 @@
+🔥 Mike this is gold — this catalog is basically an **entire category inside Logora’s prompt library**:
+
+👉 **E-Commerce & Marketplaces**
+(over 90+ starter project ideas in your list).
+
+Here’s how we wire it into your Replit build so it’s instantly usable as **clickable prompt cards** inside Logora:
+
+---
+
+## 🔹 Replit Prompt for “E-Commerce & Marketplaces”
+
+Paste this **entire block** into Replit’s **AI Generate from Prompt** input:
+
+````markdown
+Update my Flask app **Logora** to include a new category called  
+**“🛒 E-Commerce & Marketplaces”** in the public prompt library.
+
+### Requirements
+
+1. In `app.py`
+   - Ensure there is a dictionary named `startup_prompt_groups`.
+   - Add a new key `"E-Commerce & Marketplaces"` containing this full list of prompts:
+
+```python
+startup_prompt_groups["E-Commerce & Marketplaces"] = [
+    "Shopify Ecommerce Template — Shopify + Tailwind template for online stores",
+    "Minimal Shop — Next.js + Tailwind lightweight e-commerce starter",
+    "Clothing Ecommerce Platform — React + Node.js fashion storefront with cart/checkout",
+    "Car Parts E-Commerce — Next.js + Express store tailored to automotive parts",
+    "Crypto Payment Gateway — Web3 + Next.js + Solidity integration for digital currency checkout",
+    "NFT Marketplace Website — Web3.js + Next.js NFT buy/sell platform",
+    "Flexible E-Commerce Platform — Full-stack Next.js + Stripe + Supabase backend",
+    "E-Commerce Website Design — Tailwind + React pre-styled shopping pages",
+    "Complete E-Commerce Website — Next.js + Prisma + Stripe checkout full solution",
+    "E-Commerce Online Shopping App — React Native + Firebase mobile shopping app",
+    "Food POS & Online Store — POS + ordering dashboard using React + Supabase",
+    "Luxury Portfolio Storefront — Modern Tailwind e-commerce with product galleries",
+    "Single Product QuickShop (EN+AR) — Next.js + Stripe + i18n bilingual store",
+    "Farmers Market Website — Local food marketplace built with WordPress + WooCommerce",
+    "Art Auction Platform — Next.js + WebSockets for real-time bidding",
+    "Furniture & Home Decor E-Commerce — Shopify/Next.js hybrid storefront",
+    "Mobile Storefront (Nano Banana) — Next.js + AI SDK + AI Gateway experimental commerce",
+    "Bookstore Template — React + Supabase bookstore front with payments",
+    "Digital Marketplace (Productized Services) — Next.js + Stripe for SaaS service selling",
+    "Marketplace Template — Next.js + Shadcn base marketplace starter",
+    "Supabase Mini Ecommerce — Supabase + React minimal e-commerce setup",
+    "Supabase Starter Shop — Supabase + Tailwind + Stripe starter store",
+    "Modern Tote Bag Store — Tailwind + React styled single-product shop",
+    "Shopify Product Page Design — Shopify + Liquid + Tailwind styled PDP layout",
+    "Shopify Template (Alt) — Duplicate Shopify layout, Shopify + Tailwind",
+    "E-Commerce Platform Idea — Next.js + Stripe generic e-commerce scaffold",
+    "Nanga Market E-Commerce — WordPress + WooCommerce regional market site",
+    "Origin E-Commerce UI — Tailwind + Shadcn pre-built components for online stores",
+    "E-Commerce App (Mobile) — React Native e-commerce app with Firebase backend",
+    "E-Commerce Website Clone — Next.js full-stack clone of a modern store",
+    "Amazon E-Commerce Site Clone — Next.js + Supabase Amazon-style storefront",
+    "Skylab Token Store (Test) — Next.js + Web3.js token-based marketplace",
+    "Crypto Vest Platform — Blockchain + React investment/e-commerce hybrid",
+    "Car Rental Website Clone — Next.js + Tailwind car rental e-commerce design",
+    "Booking Car Rent App — React Native + Stripe car rental booking system",
+    "Hotel Booking E-Commerce — Next.js + Supabase hotel booking platform",
+    "Restaurant Recruitment Platform — Job + booking style hybrid, Next.js + Supabase",
+    "Pizza Shop Website — Tailwind + Next.js small restaurant ordering site",
+    "Coffee Shop Inventory System — Supabase + Prisma coffee store management",
+    "Bakery Landing Page — Next.js + Tailwind e-commerce landing",
+    "Café & Bistro E-Commerce — WordPress + WooCommerce for small cafés",
+    "Sapid Food Ordering — Mobile food ordering app, React Native + Firebase",
+    "Food POS Dashboard (Keeping Food) — React POS + ordering for restaurants",
+    "Teatree Website Redesign — Tailwind + WordPress template for cafés",
+    "Fit Life E-Commerce — Next.js + Stripe fitness & wellness store",
+    "Wellness Product Store — Shopify + Tailwind supplements/e-commerce",
+    "Beauty Website Design — Tailwind + Next.js beauty products storefront",
+    "Glow Salon Booking Storefront — Next.js + Stripe salon/beauty e-commerce",
+    "Cosmetics E-Commerce Platform — Shopify + Tailwind beauty store template",
+    "PerfumesPedia — Next.js + WooCommerce fragrance directory/shop",
+    "Tattoo E-Commerce Concept — Shopify + WooCommerce tattoo products",
+    "Toy Storefront (Shivam Toys) — Next.js toy shop e-commerce site",
+    "Olive Kiddies Store — Shopify children’s products e-commerce",
+    "Healthcare POS + Store — Supabase hospital POS + pharmacy ordering",
+    "Pharmacy & Prescription Storefront — WordPress + WooCommerce + HIPAA add-ons",
+    "Pet Store E-Commerce Template — Tailwind + Next.js pet store",
+    "Modern Pet Store E-Commerce Template — React + Supabase styled storefront",
+    "Dog Grooming Landing Storefront — Next.js + Stripe dog grooming booking + shop",
+    "Herbal Garden Website — Shopify natural products store",
+    "HaloCare Health Store — WordPress + HIPAA add-on online healthcare shop",
+    "Hospital App E-Commerce — Next.js + Supabase hospital POS/appointments",
+    "MediHomeTz E-Commerce — Next.js + Stripe healthcare storefront",
+    "Dentist Monali Storefront — Tailored dental e-commerce booking",
+    "Pediatric Health App Storefront — Next.js + Firebase pediatric shop",
+    "Personalized Meal Delivery App — React Native + Stripe subscription meal delivery",
+    "Fitness Appointment App — Next.js + Stripe gym/fitness e-commerce",
+    "Fitmart Mobile App — React Native + Stripe fitness store mobile app",
+    "Nutrition App Storefront — Next.js + Tailwind diet plan + e-commerce integration",
+    "NFeProdutor Farm Store — Agriculture-focused e-commerce app",
+    "Masari Webapp Marketplace — Next.js + Supabase small marketplace app",
+    "Jobhouse25 Marketplace — Job + e-commerce platform, Next.js full-stack",
+    "B2B SaaS E-Commerce Starter (Clerk) — Clerk + Next.js B2B store template",
+    "B2C SaaS E-Commerce Starter (Clerk) — Clerk + Next.js B2C store template",
+    "SaaS Yacht Club Storefront — Next.js SaaS membership + e-commerce template",
+    "Ai Service Landing Page (Store) — Next.js + Stripe AI-as-a-service checkout",
+    "Sentient AI Subscription Storefront — Next.js + Stripe AI subscription e-commerce",
+    "AI Kit Landing Storefront — Next.js + Stripe AI tools e-commerce",
+    "Digital Art Space E-Commerce — Next.js art store with Stripe",
+    "Photography Quote Calculator Storefront — Next.js app + Stripe for creative services",
+    "Custom Game Card Maker Storefront — Tailwind + Stripe game merch e-commerce",
+    "Music Production Site Storefront — Next.js + Supabase music digital shop",
+    "Guitar Scale Practice Tool Storefront — React + Stripe SaaS e-commerce for musicians",
+    "Music Visualizer E-Commerce Add-On — Creative audio tool with paid templates",
+    "Spotify UI Store Clone — React + Supabase Spotify-style merch store",
+    "Perfume Store (Alternate) — Shopify fragrance e-commerce template",
+    "Travel Partner App Storefront — Travel + bookings + e-commerce",
+    "Travel Buddy App Store — React Native travel planning + Stripe checkout",
+    "Carpenter’s Toolkit Storefront — Shopify tools/e-commerce shop",
+    "Construction Service Website — Next.js + Stripe construction marketplace",
+    "ERM Manufacturing Website — WordPress manufacturing e-commerce",
+    "Auto Parts Storefront — Next.js + Stripe auto parts e-commerce",
+    "Vehicle Assistant Storefront — Next.js + Supabase vehicle services shop",
+    "Luxury Yacht Website Storefront — Next.js + Tailwind yacht sales e-commerce",
+    "Event Gifting SuperChat — Next.js + Stripe gifting marketplace",
+    "Event Gifting Ticketing — Next.js + Stripe ticket sales storefront",
+    "Event Gifting Kouyasai — Cultural gift exchange marketplace, React + Supabase",
+    "Ejl Farms Website Storefront — WordPress agriculture e-commerce",
+    "LZ4 Playground Shop — React + Stripe digital tools store",
+    "Skincare & GlowForce Products Storefront — Next.js + Stripe wellness e-commerce",
+    "AI Card Generation Storefront — Next.js + AI SDK + Stripe digital card generator"
+]
+````
+
+2. In `templates/index.html`
+
+   * Add a new section titled **“🛒 E-Commerce & Marketplaces”**.
+   * Render all prompts from that category as **glassmorphism cards** in a responsive grid.
+   * Each card should insert its text into the textarea (`user_request`) on click.
+
+3. Styling
+
+   * Match dark/light mode with CSS variables.
+   * Cards: gradient border, soft blue glow on hover, rounded-xl, `hover:scale-105`.
+   * Grid: 2–3 columns on desktop, 1 on mobile.
+
+---
+
+### Deliverable
+
+A new **E-Commerce & Marketplaces** section inside Logora’s prompt library, containing ~100 preloaded starter prompts as clickable cards.
+
+```
+
+---
+
+⚡ This way, Replit will **inject this entire catalog** into your app automatically.  
+
+👉 Do you want me to expand the master Replit prompt so it includes **all 8 categories at once** (AI & SaaS, Dashboards, E-commerce, Creative, Games, Dev Tools, Healthcare, Utilities), so you paste it just one time and get the full startup library?
+```
